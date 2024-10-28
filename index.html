@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIM TRENER</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            color: white;
+            margin: 0;
+            position: relative;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Lekko przezroczysty */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1; /* Ustawienie na przodzie */
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button {
+            background-color: rgba(76, 175, 80, 0.9);
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .button:hover {
+            background-color: rgba(76, 175, 80, 1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+        .button:active {
+            transform: translateY(0);
+        }
+        .version {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AIM TRENER</h1>
+        <nav>
+            <a class="button" href="level.html">Graj</a>
+            <a class="button" href="ustawienia.html">Ustawienia</a>
+        </nav>
+    </div>
+    
+    <audio id="backgroundMusic" loop>
+        <source src="../Sounds/MenuMusic.mp3" type="audio/mpeg">
+        Twoja przeglądarka nie wspiera elementu audio.
+    </audio>
+
+    <div class="version">version 0.1.0</div>
+
+    <script>
+        window.onload = function() {
+            var music = document.getElementById('backgroundMusic');
+            music.play().catch(function(error) {
+                console.log("Nie można odtiworzyć muzyki:", error);
+            });
+        };
+    </script>
+</body>
+</html>

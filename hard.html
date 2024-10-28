@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra - Ciężki - AIM TRENER</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+        .target {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+        }
+        .scoreboard {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            z-index: 10;
+        }
+        .final-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 2em;
+            display: none;
+            color: yellow;
+        }
+        .button {
+            background-color: #4CAF50; /* Zielony */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 20px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+        }
+        .button:hover {
+            background-color: rgba(76, 175, 80, 1);
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="scoreboard">
+        Czas: <span id="time">20</span> | Punkty: <span id="score">0</span>
+    </div>
+    <div id="targetsContainer"></div>
+    <div class="final-score" id="finalScore">
+        <div id="result"></div>
+        <button class="button" id="restartButton">Zacznij jeszcze raz</button>
+        <button class="button" id="menuButton">Wróć do menu</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let time = 20; // 20 sekund
+        const targetCount = 3; // 3 kulki
+        let timer;
+
+        const timeDisplay = document.getElementById('time');
+        const scoreDisplay = document.getElementById('score');
+        const finalScoreDisplay = document.getElementById('finalScore');
+        const resultDisplay = document.getElementById('result');
+        const restartButton = document.getElementById('restartButton');
+        const menuButton = document.getElementById('menuButton');
+        const targetsContainer = document.getElementById('targetsContainer');
+
+        function startGame() {
+            score = 0;
+            time = 20; // Reset czasu do 20 sekund
+            timeDisplay.textContent = time;
+            scoreDisplay.textContent = score;
+            finalScoreDisplay.style.display = 'none';
+            targetsContainer.innerHTML = '';
+
+            timer = setInterval(updateTime, 1000);
+            spawnTargets(targetCount);
+        }
+
+        function updateTime() {
+            time--;
+            timeDisplay.textContent = time;
+            if (time <= 0) {
+                clearInterval(timer);
+                endGame();
+            }
+        }
+
+        function spawnTargets(count) {
+            for (let i = 0; i < count; i++) {
+                const target = document.createElement('div');
+                target.classList.add('target');
+                moveTarget(target);
+                targetsContainer.appendChild(target);
+
+                target.addEventListener('click', function() {
+                    score++;
+                    scoreDisplay.textContent = score;
+                    moveTarget(target);
+                });
+            }
+        }
+
+        function moveTarget(target) {
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+        }
+
+        function endGame() {
+            targetsContainer.innerHTML = '';
+            resultDisplay.innerHTML = `Koniec gry!<br>Punkty: ${score}<br>Czas: 20 sekund`;
+            finalScoreDisplay.style.display = 'block';
+        }
+
+        restartButton.addEventListener('click', startGame);
+        menuButton.addEventListener('click', function() {
+            window.location.href = 'level.html';
+        });
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>
